@@ -1,2 +1,2 @@
 # task_manager
-A simple task for your daily needs
+A simple task manager for your daily needs

@@ -1,0 +1,4 @@
+io/flutter/plugins/GeneratedPluginRegistrant.java
+ io.flutter.plugins.GeneratedPluginRegistrant
+com/taskmanager/task_manager/BuildConfig.java
+ com.taskmanager.task_manager.BuildConfig
