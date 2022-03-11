@@ -10,8 +10,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  //
+  Size? size;
   @override
   Widget build(BuildContext context) {
+    size = MediaQuery.of(context).size;
     return SafeArea(
       bottom: false,
       left: false,
@@ -64,16 +67,25 @@ class _HomeScreenState extends State<HomeScreen> {
 
                   ),
                 )),
+            SizedBox(height: 30,),
             Expanded(
                 flex: 5,
-                child: Container(
-                  constraints: BoxConstraints.expand(),
+                child: SizedBox(
+                  height: size!.height * 0.1,
+                  width: size!.width,
 
-                  child: ListView(
-                    scrollDirection: Axis.vertical,
-                    children: <Widget>[
-                      TaskCards()
-                    ],
+                  child: Scrollbar(
+                    child: ListView(
+                      physics: const ScrollPhysics(),
+                      scrollDirection: Axis.vertical,
+                      children: const <Widget>[
+                        TaskCards(),
+                        TaskCards(),
+                        TaskCards(),
+                        TaskCards(),
+                        TaskCards(),
+                      ],
+                    ),
                   ),
                 )),
           ],
