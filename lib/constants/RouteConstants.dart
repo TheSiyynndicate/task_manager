@@ -1,3 +1,5 @@
 class RouteConstants{
-  static const String home = '/';
+  static const String home = '/Home';
+  static const String loginScreen = '/LoginScreen';
+  static const String onBoardingScreen = '/OnBoardingScreen';
 }

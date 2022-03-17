@@ -12,6 +12,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   //
   Size? size;
+
   @override
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
@@ -34,13 +35,13 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Center(
                               child: Text(
                             'My Task',
-                            style: Theme.of(context).textTheme.subtitle1,
+                            style: Theme.of(context).textTheme.headline6!.copyWith(fontWeight: FontWeight.bold,color: Colors.white),
                           ))),
                       Expanded(
                           flex: 2,
                           child: Text(
                             'You have 4 remaining tasks',
-                            style: Theme.of(context).textTheme.subtitle1,
+                            style: Theme.of(context).textTheme.subtitle1!.copyWith(color: Colors.white),
                           ))
                     ]),
               ]),
@@ -49,31 +50,31 @@ class _HomeScreenState extends State<HomeScreen> {
                 flex: 2,
                 child: Container(
                   decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
                       gradient: LinearGradient(
-                    begin: Alignment.topRight,
-                    end: Alignment.bottomLeft,
-                    tileMode: TileMode.mirror,
-                    stops: [
-                      0.1,
-                      0.9,
-                    ],
-                    colors: [AppColors.greenPantoneG, AppColors.rustyRedG],
-                  )),
+                        begin: Alignment.topRight,
+                        end: Alignment.bottomLeft,
+                        tileMode: TileMode.mirror,
+                        stops: [
+                          0.1,
+                          0.9,
+                        ],
+                        colors: [AppColors.greenPantone, AppColors.rustyRed],
+                      )),
                   constraints: const BoxConstraints.expand(),
                   child: const Card(
                     elevation: 0.0,
                     color: Colors.transparent,
-
                   ),
                 )),
-            SizedBox(height: 30,),
+            const SizedBox(
+              height: 30,
+            ),
             Expanded(
                 flex: 5,
                 child: SizedBox(
                   height: size!.height * 0.1,
                   width: size!.width,
-
                   child: Scrollbar(
                     child: ListView(
                       physics: const ScrollPhysics(),

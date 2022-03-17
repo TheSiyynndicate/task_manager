@@ -1,0 +1,165 @@
+import 'dart:developer';
+
+import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:task_manager/constants/RouteConstants.dart';
+
+
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({Key? key}) : super(key: key);
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  //focus node for the login text field
+  late FocusNode _loginFocus;
+
+  //focus node for the password text field
+  late FocusNode _passFocus;
+
+  //The text field controller
+  final _loginController = TextEditingController();
+
+  //The text field controller
+  final _passwordController = TextEditingController();
+
+  // Note: This is a `GlobalKey<FormState>`,
+  // not a GlobalKey<MyCustomFormState>.
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+        bottom: false,
+        child: GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: Scaffold(
+            body: Center(
+              child: ConstrainedBox(
+                constraints: BoxConstraints.tight(const Size(350, 350)),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      children: <Widget>[
+                        Expanded(
+                            flex: 3,
+                            child: Column(
+                              children: [
+                                TextFormField(
+                                  decoration: const InputDecoration(
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Colors.grey, width: 0.0),
+                                      ),
+                                      border: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Colors.grey, width: 0.0),
+                                      ),
+                                      disabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Colors.grey, width: 0.0),
+                                      ),
+                                      label: Text('Email')),
+                                  controller: _loginController,
+                                  focusNode: _loginFocus,
+                                  validator: (val) {},
+                                ),
+                              ],
+                            )),
+                        Expanded(
+                            flex: 3,
+                            child: Column(
+                              children: [
+                                TextFormField(
+                                  decoration: const InputDecoration(
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Colors.grey, width: 0.0),
+                                      ),
+                                      border: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Colors.grey, width: 0.0),
+                                      ),
+                                      disabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Colors.grey, width: 0.0),
+                                      ),
+                                      label: Text('Password')),
+                                  controller: _passwordController,
+                                  focusNode: _passFocus,
+                                  validator: (val) {},
+                                ),
+                              ],
+                            )),
+                        Expanded(
+                            flex: 3,
+                            child: Column(
+                              children: [
+                                ElevatedButton(
+                                  onPressed: () => _login(),
+                                  child: Text('Login'),
+                                  style: ElevatedButton.styleFrom(
+                                      fixedSize: Size(400, 50)),
+                                ),
+                              ],
+                            )),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ));
+  }
+
+  _login() async {
+    Dio dio = Dio();
+    print(_loginController.text);
+    print(_passwordController.text);
+    Response response = await dio.post('https://task-managero.herokuapp.com/users/login', data: {
+      "email": _loginController.text,
+      "password": _passwordController.text
+    });
+
+
+    log('This is the response when I tried to login: ${response.data}');
+
+    if (response.statusCode == 200) {
+      Navigator.pushNamed(context, RouteConstants.home);
+    } else {
+      Fluttertoast.showToast(
+          msg: "Either you haven't registered or bad credentials",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
+
+    }
+  }
+
+  @override
+  void initState() {
+    _loginFocus = FocusNode();
+    _passFocus = FocusNode();
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _loginFocus.dispose();
+    _passFocus.dispose();
+    super.dispose();
+  }
+}

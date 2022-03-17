@@ -30,6 +30,10 @@ cupertino_icons
 2.12
 file:///Users/mohammedkabirmalan/.pub-cache/hosted/pub.dartlang.org/cupertino_icons-1.0.4/
 file:///Users/mohammedkabirmalan/.pub-cache/hosted/pub.dartlang.org/cupertino_icons-1.0.4/lib/
+dio
+2.12
+file:///Users/mohammedkabirmalan/.pub-cache/hosted/pub.dartlang.org/dio-4.0.4/
+file:///Users/mohammedkabirmalan/.pub-cache/hosted/pub.dartlang.org/dio-4.0.4/lib/
 fake_async
 2.12
 file:///Users/mohammedkabirmalan/.pub-cache/hosted/pub.dartlang.org/fake_async-1.2.0/
@@ -46,6 +50,10 @@ flutter_lints
 2.12
 file:///Users/mohammedkabirmalan/.pub-cache/hosted/pub.dartlang.org/flutter_lints-1.0.4/
 file:///Users/mohammedkabirmalan/.pub-cache/hosted/pub.dartlang.org/flutter_lints-1.0.4/lib/
+fluttertoast
+2.12
+file:///Users/mohammedkabirmalan/.pub-cache/hosted/pub.dartlang.org/fluttertoast-8.0.9/
+file:///Users/mohammedkabirmalan/.pub-cache/hosted/pub.dartlang.org/fluttertoast-8.0.9/lib/
 google_fonts
 2.12
 file:///Users/mohammedkabirmalan/.pub-cache/hosted/pub.dartlang.org/google_fonts-2.2.0/
@@ -58,6 +66,10 @@ http_parser
 2.12
 file:///Users/mohammedkabirmalan/.pub-cache/hosted/pub.dartlang.org/http_parser-4.0.0/
 file:///Users/mohammedkabirmalan/.pub-cache/hosted/pub.dartlang.org/http_parser-4.0.0/lib/
+js
+2.12
+file:///Users/mohammedkabirmalan/.pub-cache/hosted/pub.dartlang.org/js-0.6.3/
+file:///Users/mohammedkabirmalan/.pub-cache/hosted/pub.dartlang.org/js-0.6.3/lib/
 lints
 2.12
 file:///Users/mohammedkabirmalan/.pub-cache/hosted/pub.dartlang.org/lints-1.0.1/
@@ -170,4 +182,8 @@ flutter_test
 2.12
 file:///Users/mohammedkabirmalan/developer/flutter/packages/flutter_test/
 file:///Users/mohammedkabirmalan/developer/flutter/packages/flutter_test/lib/
+flutter_web_plugins
+2.12
+file:///Users/mohammedkabirmalan/developer/flutter/packages/flutter_web_plugins/
+file:///Users/mohammedkabirmalan/developer/flutter/packages/flutter_web_plugins/lib/
 2

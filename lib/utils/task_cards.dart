@@ -9,13 +9,13 @@ class TaskCards extends StatefulWidget {
 }
 
 class _TaskCardsState extends State<TaskCards> {
-
   //
   late FocusNode _focusNode;
+
   //Test bolean
   bool _checkVal = false;
 
-  _changeVal(val){
+  _changeVal(val) {
     _checkVal = val;
     print('Val changed $val');
   }
@@ -23,17 +23,16 @@ class _TaskCardsState extends State<TaskCards> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 5.0),
+      margin:const EdgeInsets.symmetric(vertical: 15.0),
       child: SizedBox(
         height: 125,
         width: 300,
         child: Container(
           decoration: BoxDecoration(
-            color: AppColors.greenPantoneG,
+            color: AppColors.greenPantone,
             borderRadius: BorderRadius.circular(10),
           ),
-          padding: EdgeInsets.all(5.0),
-
+          padding: const EdgeInsets.all(5.0),
           child: Row(
             children: <Widget>[
               Expanded(
@@ -41,21 +40,18 @@ class _TaskCardsState extends State<TaskCards> {
                   child: Checkbox(
                     focusNode: _focusNode,
                     shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10))
-                    ),
+                        borderRadius: BorderRadius.all(Radius.circular(10))),
                     value: _checkVal,
                     onChanged: (val) {
-            setState(() {
-              _changeVal(val);
-            });
+                      setState(() {
+                        _changeVal(val);
+                      });
                     },
                   )),
               Expanded(
                 flex: 8,
                 child: Row(
-                  children: <Widget>[
-
-                  ],
+                  children: <Widget>[],
                 ),
               )
             ],
@@ -67,10 +63,8 @@ class _TaskCardsState extends State<TaskCards> {
 
   @override
   void initState() {
-
     super.initState();
     _focusNode = FocusNode();
-
   }
 
   @override

@@ -21,6 +21,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.oldLace,
       bottomNavigationBar:bottomNavBar(),
       body: _screenOptions!.elementAt(_selectedIndex!),
     );
@@ -61,6 +62,7 @@ class _HomeState extends State<Home> {
 
 
     return BottomNavigationBar(items: items,
+      backgroundColor: AppColors.smokyBlack,
 
       currentIndex: _selectedIndex!,
       selectedItemColor: AppColors.greenPantone,
