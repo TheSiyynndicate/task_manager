@@ -15,8 +15,10 @@ class _TaskCardsState extends State<TaskCards> {
   //
   late FocusNode _focusNode;
 
-  //Test bolean
+  //Test boolean
   bool _checkVal = false;
+
+
 
   _changeVal(val) {
     _checkVal = val;
@@ -72,6 +74,19 @@ class _TaskCardsState extends State<TaskCards> {
     super.initState();
     _focusNode = FocusNode();
     title =widget.title;
+  }
+
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    print('Change update');
+  }
+
+  @override
+  void didUpdateWidget(oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    print('update');
   }
 
   @override

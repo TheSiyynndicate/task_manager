@@ -2,9 +2,12 @@ import 'dart:async';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:task_manager/constants/api_endpoints.dart';
 import 'package:task_manager/constants/app_colors.dart';
 import 'package:task_manager/data/models/login_model.dart';
 import 'package:task_manager/data/models/tasks_model.dart';
+import 'package:task_manager/utils/dio_client.dart';
 import 'package:task_manager/utils/task_cards.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -17,13 +20,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
-  final streamController = StreamController(
-    onPause: () => print('Paused'),
-    onResume: () => print('Resumed'),
-    onCancel: () => print('Cancelled'),
-    onListen: () => print('Listens'),
+  final streamController = StreamController.broadcast(
   );
+
   //
   late TasksModel? tasksModel;
 
@@ -39,33 +38,85 @@ class _HomeScreenState extends State<HomeScreen> {
   //
   final _descriptionController = TextEditingController();
 
-  Future<Stream> feedStream() async {
-    final stream = Stream<int>.periodic(
-        const Duration(seconds: 1), (count) => count);
-    await streamController.addStream(stream);
-    return stream;
-  }
   @override
   void initState() {
     super.initState();
 
     streamController.stream.listen(
-          (event) => print('Event: $event'),
-      onDone: () => print('Done'),
-      onError: (error) => print(error),
+      (event) {}
     );
     loginModel = widget.loginModel;
     tasksModel = TasksModel();
     future = _();
   }
 
+  @override
+  void dispose() {
+    streamController.close();
+    streamController.sink.close();
+
+    super.dispose();
+  }
+
+  Stream<TasksModel?> stream() async* {
+    Dio dio = Dio();
+    while (true) {
+      try {
+        Response response = await dio.get(
+            "https://task-managero.herokuapp.com/tasks",
+            options: Options(headers: {
+              "Authorization": "Bearer ${loginModel!.data!.token}"
+            }));
+
+        tasksModel = TasksModel.fromJson(response.data);
+      } on Exception catch (e) {
+        // TODO
+        print(e);
+      }
+    }
+    streamController.sink.add(tasksModel);
+    yield tasksModel;
+  }
+
+  _saveNewTask() async {
+    DioClient dioClient = DioClient(header: {
+      "Authorization": "Bearer ${loginModel!.data?.token}"
+    }, data: {
+      "title": _titleController.text,
+      "description": _descriptionController.text
+    }, query: {});
+
+    Response? response =
+        await dioClient.postRequest(path: ApiEndpoints.createTask);
+
+    if (response!.statusCode == 201) {
+      Navigator.pop(context);
+      Fluttertoast.showToast(
+          msg: "Added successfully",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: AppColors.greenPantoneG,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    } else {
+      Fluttertoast.showToast(
+          msg: "Failed to add task",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: AppColors.greenPantoneG,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    }
+  }
+
   Future<TasksModel?> _() async {
     Dio dio = Dio();
     Response response;
 
-    print('doing');
+
     try {
-      feedStream();
       response = await dio.get("https://task-managero.herokuapp.com/tasks",
           options: Options(
               headers: {"Authorization": "Bearer ${loginModel!.data!.token}"}));
@@ -92,12 +143,34 @@ class _HomeScreenState extends State<HomeScreen> {
             future: future,
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
+                Timer.periodic(const Duration(seconds: 5), (timer) async {
+                  Dio dio = Dio();
+                  try {
+                    print("help");
+                    Response response = await dio.get(
+                        "https://task-managero.herokuapp.com/tasks",
+                        options: Options(headers: {
+                          "Authorization": "Bearer ${loginModel!.data!.token}"
+                        }));
+
+                    tasksModel = TasksModel.fromJson(response.data);
+                    streamController.sink.add(tasksModel);
+                  } on Exception catch (e) {
+                    // TODO
+                    print(e);
+                  }
+
+                });
                 return Material(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: Scaffold(
-                      resizeToAvoidBottomInset: true,
-                      body: Column(
+                  child: Scaffold(
+                    resizeToAvoidBottomInset: true,
+                    appBar: AppBar(
+toolbarHeight: 50.0,
+
+                    ),
+                    body: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      child: Column(
                         children: <Widget>[
                           Expanded(
                             flex: 1,
@@ -163,25 +236,40 @@ class _HomeScreenState extends State<HomeScreen> {
                                 height: size!.height * 0.1,
                                 width: size!.width,
                                 child: Scrollbar(
-                                    child: ListView.builder(
-                                        itemCount: tasksModel!.data!.length,
-                                        itemBuilder:
-                                            (BuildContext context, int index) {
-                                          return TaskCards(
-                                            title: tasksModel!.data!
-                                                .elementAt(index)
-                                                .title,
-                                          );
+                                    child: StreamBuilder(
+                                        stream: streamController.stream,
+                                        builder: (BuildContext context,
+                                            AsyncSnapshot snapshot) {
+                                          if (snapshot.hasData) {
+                                            return ListView.builder(
+                                                itemCount:
+                                                    tasksModel!.data!.length,
+                                                itemBuilder:
+                                                    (BuildContext context,
+                                                        int index) {
+                                                  return TaskCards(
+                                                    title: tasksModel!.data!
+                                                        .elementAt(index)
+                                                        .title,
+                                                  );
+                                                });
+                                          } else if (snapshot.hasError) {
+                                            return Icon(Icons.error_outline);
+                                          } else {
+                                            return Center(
+                                                child:
+                                                    const CircularProgressIndicator());
+                                          }
                                         })),
                               )),
                         ],
                       ),
-                      floatingActionButton: FloatingActionButton(
-                        onPressed: () {
-                          _showDialog(context: context);
-                        },
-                        child: const Icon(Icons.add),
-                      ),
+                    ),
+                    floatingActionButton: FloatingActionButton(
+                      onPressed: () {
+                        _showDialog(context: context);
+                      },
+                      child: const Icon(Icons.add),
                     ),
                   ),
                 );
@@ -201,29 +289,94 @@ class _HomeScreenState extends State<HomeScreen> {
       builder: (BuildContext dialogContext) {
         return AlertDialog(
           backgroundColor: Colors.white,
-          title: Text('Alert'),
+          title: Text('Create a task'),
+          scrollable: true,
           elevation: 5.0,
           content: Column(
+            mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               Container(
+                margin: const EdgeInsets.symmetric(vertical: 10),
                 height: 50,
                 child: TextFormField(
                   controller: _titleController,
+                  decoration: InputDecoration(
+                    isDense: true,
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 13.0, horizontal: 10.0),
+                    errorMaxLines: 1,
+                    disabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                          color: AppColors.greenPantoneG, width: 2.0),
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide:
+                          const BorderSide(color: Colors.black, width: 1.0),
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                    alignLabelWithHint: true,
+                    errorStyle: TextStyle(fontSize: 12),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                          color: AppColors.greenPantoneG, width: 2.0),
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                    constraints:
+                        BoxConstraints.tight(Size(double.maxFinite, 70)),
+                    border: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                          color: AppColors.rustyRed, width: 2.0),
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                    labelText: 'Title',
+                  ),
                 ),
               ),
               Container(
+                margin: const EdgeInsets.symmetric(vertical: 10),
                 height: 50,
                 child: TextFormField(
                   controller: _descriptionController,
+                  decoration: InputDecoration(
+                    isDense: true,
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 13.0, horizontal: 10.0),
+                    errorMaxLines: 1,
+                    disabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                          color: AppColors.greenPantoneG, width: 2.0),
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide:
+                          const BorderSide(color: Colors.black, width: 1.0),
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                    alignLabelWithHint: true,
+                    errorStyle: TextStyle(fontSize: 12),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                          color: AppColors.greenPantoneG, width: 2.0),
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                    constraints:
+                        BoxConstraints.tight(Size(double.maxFinite, 70)),
+                    border: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                          color: AppColors.rustyRed, width: 2.0),
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                    labelText: 'Description',
+                  ),
                 ),
-              ),         Container(
-                height: 50,
-                child: ElevatedButton(
-                  child: Container(),
-                  onPressed: (){},
-                )
               ),
-
+              Container(
+                  height: 50,
+                  child: ElevatedButton(
+                    child: Text('Add task to the to do list'),
+                    onPressed: () => _saveNewTask(),
+                  )),
             ],
           ),
         );

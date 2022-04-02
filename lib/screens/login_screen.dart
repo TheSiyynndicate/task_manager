@@ -4,8 +4,11 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:task_manager/constants/RouteConstants.dart';
+import 'package:task_manager/constants/api_endpoints.dart';
+import 'package:task_manager/constants/app_colors.dart';
 import 'package:task_manager/data/models/login_model.dart';
 import 'package:task_manager/screens/home_screen.dart';
+import 'package:task_manager/utils/dio_client.dart';
 
 
 class LoginScreen extends StatefulWidget {
@@ -16,6 +19,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  //
+  bool isPressed = false;
   //
   String _emailText = '';
 
@@ -118,8 +123,10 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: Column(
                               children: [
                                 ElevatedButton(
-                                  onPressed: () => _login(),
-                                  child: Text('Login'),
+                                  onPressed: () => isPressed? (){} :_login(),
+                                  child: isPressed? const Center(child: CircularProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation<Color>(AppColors.oldLace),
+                                  ),) : Text('Login'),
                                   style: ElevatedButton.styleFrom(
                                       fixedSize: Size(400, 50)),
                                 ),
@@ -135,22 +142,32 @@ class _LoginScreenState extends State<LoginScreen> {
         ));
   }
 
-  _login() async {
-    Dio dio = Dio();
-    print(_loginController.text);
-    print(_passwordController.text);
-    Response response = await dio.post('https://task-managero.herokuapp.com', data: {
-      "email": _emailText,
-      "password": _passwordText
+  void _setIsPressed(){
+    setState(() {
+      isPressed = !isPressed;
     });
+  }
+   _login() async {
+    _setIsPressed();
+
+    DioClient dioClient = DioClient(header: {"Content-Type":"application/json"},data: {"email":_loginController.text,"password":_passwordController.text},query: {});
+    Response? response;
+
+    response = await dioClient.postRequest(path: ApiEndpoints.login);
+
+    print(_emailText);
+    print(_passwordText);
 
 
-    log('This is the response when I tried to login: ${response.data}');
+
+    log('This is the response when I tried to login: ${response!.data}');
 
     if (response.statusCode == 200) {
+      _setIsPressed();
      Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen(loginModel: loginModel,)));
       loginModel = LoginModel.fromJson(response.data);
     } else {
+      _setIsPressed();
       Fluttertoast.showToast(
           msg: "Either you haven't registered or bad credentials",
           toastLength: Toast.LENGTH_LONG,
