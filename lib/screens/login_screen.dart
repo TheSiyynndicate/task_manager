@@ -4,6 +4,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:task_manager/constants/RouteConstants.dart';
+import 'package:task_manager/data/models/login_model.dart';
+import 'package:task_manager/screens/home_screen.dart';
 
 
 class LoginScreen extends StatefulWidget {
@@ -14,6 +16,13 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  //
+  String _emailText = '';
+
+  //
+  String _passwordText='';
+  //
+  late LoginModel loginModel;
   //focus node for the login text field
   late FocusNode _loginFocus;
 
@@ -70,6 +79,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                   controller: _loginController,
                                   focusNode: _loginFocus,
                                   validator: (val) {},
+                                  onFieldSubmitted: (val){
+                                    _emailText = val;
+                                  },
                                 ),
                               ],
                             )),
@@ -95,6 +107,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                   controller: _passwordController,
                                   focusNode: _passFocus,
                                   validator: (val) {},
+                                  onFieldSubmitted: (val){
+                                    _passwordText = val;
+                                  },
                                 ),
                               ],
                             )),
@@ -124,16 +139,17 @@ class _LoginScreenState extends State<LoginScreen> {
     Dio dio = Dio();
     print(_loginController.text);
     print(_passwordController.text);
-    Response response = await dio.post('https://task-managero.herokuapp.com/users/login', data: {
-      "email": _loginController.text,
-      "password": _passwordController.text
+    Response response = await dio.post('https://task-managero.herokuapp.com', data: {
+      "email": _emailText,
+      "password": _passwordText
     });
 
 
     log('This is the response when I tried to login: ${response.data}');
 
     if (response.statusCode == 200) {
-      Navigator.pushNamed(context, RouteConstants.home);
+     Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen(loginModel: loginModel,)));
+      loginModel = LoginModel.fromJson(response.data);
     } else {
       Fluttertoast.showToast(
           msg: "Either you haven't registered or bad credentials",

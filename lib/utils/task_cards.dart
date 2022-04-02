@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:task_manager/constants/app_colors.dart';
 
 class TaskCards extends StatefulWidget {
-  const TaskCards({Key? key}) : super(key: key);
+  final String? title;
+  const TaskCards({Key? key, this.title}) : super(key: key);
 
   @override
   State<TaskCards> createState() => _TaskCardsState();
 }
 
 class _TaskCardsState extends State<TaskCards> {
+  //
+  String? title;
   //
   late FocusNode _focusNode;
 
@@ -36,7 +39,7 @@ class _TaskCardsState extends State<TaskCards> {
           child: Row(
             children: <Widget>[
               Expanded(
-                  flex: 1,
+                  flex: 2,
                   child: Checkbox(
                     focusNode: _focusNode,
                     shape: const RoundedRectangleBorder(
@@ -51,7 +54,10 @@ class _TaskCardsState extends State<TaskCards> {
               Expanded(
                 flex: 8,
                 child: Row(
-                  children: <Widget>[],
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Text(title!,style: Theme.of(context).textTheme.bodyText1,)
+                  ],
                 ),
               )
             ],
@@ -65,6 +71,7 @@ class _TaskCardsState extends State<TaskCards> {
   void initState() {
     super.initState();
     _focusNode = FocusNode();
+    title =widget.title;
   }
 
   @override
