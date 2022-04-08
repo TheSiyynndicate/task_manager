@@ -4,7 +4,7 @@ import 'package:task_manager/constants/api_endpoints.dart';
 
 class DioClient{
   ///The body of the POST request
-  Map<String,dynamic> data = {};
+  String data = "";
   ///Query for GET requests
   Map<String,dynamic> query = {};
   ///The header
@@ -29,6 +29,7 @@ class DioClient{
         print("The response from postRequest(): $response");
       }
     } on Exception catch (e) {
+      response = Response(requestOptions: RequestOptions(path: ''));
       if (kDebugMode) {
         print("An error occurred in the dio client method postRequest()");
       }

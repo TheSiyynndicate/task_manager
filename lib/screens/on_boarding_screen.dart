@@ -41,7 +41,7 @@ class OnBoardingScreen extends StatelessWidget {
                         color: AppColors.oldLace
                     )),
                     onPressed:(){
-                      Navigator.pushNamed(context, RouteConstants.loginScreen);
+                      Navigator.pushNamed(context, RouteConstants.registrationScreen);
                     } ,
                     style: ElevatedButton.styleFrom(
                         primary: AppColors.greenPantone,

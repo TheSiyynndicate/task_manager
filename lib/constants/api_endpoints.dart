@@ -8,6 +8,9 @@ class ApiEndpoints{
   ///POST
   ///Logs in  the user and returns a token which is to be stored
   static const String createTask = "/tasks/create-task";
+  ///POST
+  ///Logs in  the user and returns a token which is to be stored
+  static const String usersCreate = "/users/create";
 }
 
 ///https://task-managero.herokuapp.com/users/login

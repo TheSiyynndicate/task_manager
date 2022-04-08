@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:task_manager/constants/api_endpoints.dart';
@@ -79,12 +81,13 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   _saveNewTask() async {
-    DioClient dioClient = DioClient(header: {
-      "Authorization": "Bearer ${loginModel!.data?.token}"
-    }, data: {
+    Map<String,dynamic> _data =  {
       "title": _titleController.text,
       "description": _descriptionController.text
-    }, query: {});
+    };
+    DioClient dioClient = DioClient(header: {
+      "Authorization": "Bearer ${loginModel!.data?.token}"
+    }, data:json.encode(_data), query: {});
 
     Response? response =
         await dioClient.postRequest(path: ApiEndpoints.createTask);
@@ -146,7 +149,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 Timer.periodic(const Duration(seconds: 5), (timer) async {
                   Dio dio = Dio();
                   try {
-                    print("help");
+                    if (kDebugMode) {
+                      print("help");
+                    }
                     Response response = await dio.get(
                         "https://task-managero.herokuapp.com/tasks",
                         options: Options(headers: {
@@ -157,7 +162,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     streamController.sink.add(tasksModel);
                   } on Exception catch (e) {
                     // TODO
-                    print(e);
+                    if (kDebugMode) {
+                      print(e);
+                    }
                   }
 
                 });

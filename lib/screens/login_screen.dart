@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
@@ -148,9 +149,10 @@ class _LoginScreenState extends State<LoginScreen> {
     });
   }
    _login() async {
+    Map<String,dynamic> _data ={"email":_loginController.text,"password":_passwordController.text};
     _setIsPressed();
 
-    DioClient dioClient = DioClient(header: {"Content-Type":"application/json"},data: {"email":_loginController.text,"password":_passwordController.text},query: {});
+    DioClient dioClient = DioClient(header: {"Content-Type":"application/json"},data: json.encode(_data),query: {});
     Response? response;
 
     response = await dioClient.postRequest(path: ApiEndpoints.login);
