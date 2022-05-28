@@ -17,15 +17,15 @@ class OnBoardingScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Expanded(
-                flex: 3,
-                child: Center(child: Text('Welcome',style: Theme.of(context).textTheme.headline3,))),
+                flex: 2,
+                child: Center(child: Text('Welcome',style: Theme.of(context).textTheme.headline3,textScaleFactor: 2))),
             Expanded(flex:4, child: Container(
 
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   ElevatedButton(
-                    child: Text('Login',style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                    child: Text('Login',textScaleFactor: 2.5,style: Theme.of(context).textTheme.subtitle1?.copyWith(
                         color: AppColors.oldLace
                     )
                     ),
@@ -33,11 +33,11 @@ class OnBoardingScreen extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                         primary: AppColors.greenPantone,
                         elevation: 2.0,
-                        fixedSize: const Size(200,50)
+                        fixedSize: const Size(200,100)
                     ),
                   ),
                   ElevatedButton(
-                    child: Text('Register',style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                    child: Text('Register',textScaleFactor: 2.5,style: Theme.of(context).textTheme.subtitle1?.copyWith(
                         color: AppColors.oldLace
                     )),
                     onPressed:(){
@@ -46,13 +46,13 @@ class OnBoardingScreen extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                         primary: AppColors.greenPantone,
                         elevation: 2.0,
-                        fixedSize: const Size(200,50)
+                        fixedSize: const Size(200,100)
                     ),
                   ),
                 ],
               ),
             )),
-            Expanded(flex:4, child: Column(
+            Expanded(flex:3, child: Column(
               children: [
 
               ],

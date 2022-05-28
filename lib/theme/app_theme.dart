@@ -60,9 +60,15 @@ TextTheme AppTextTheme = TextTheme(
   bodyText1: GoogleFonts.quicksandTextTheme().bodyText1!.copyWith(
     fontSize: 12
   ),
-  bodyText2: GoogleFonts.quicksandTextTheme().bodyText2,
-  button: GoogleFonts.quicksandTextTheme().button,
-  caption: GoogleFonts.quicksandTextTheme().caption,
+  bodyText2: GoogleFonts.quicksandTextTheme().bodyText2!.copyWith(
+      fontSize: 14
+  ),
+  button: GoogleFonts.quicksandTextTheme().button!.copyWith(
+      fontSize: 12
+  ),
+  caption: GoogleFonts.quicksandTextTheme().caption!.copyWith(
+      fontSize: 12
+  ),
   headline1: GoogleFonts.quicksandTextTheme().headline1 ,
   headline2: GoogleFonts.quicksandTextTheme().headline2,
   headline3: GoogleFonts.quicksandTextTheme().headline3,

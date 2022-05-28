@@ -5,6 +5,8 @@ class TaskCards extends StatefulWidget {
   final String? title;
   const TaskCards({Key? key, this.title}) : super(key: key);
 
+
+
   @override
   State<TaskCards> createState() => _TaskCardsState();
 }
@@ -58,7 +60,7 @@ class _TaskCardsState extends State<TaskCards> {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    Text(title!,style: Theme.of(context).textTheme.bodyText1,)
+                    Text(title!,style: Theme.of(context).textTheme.bodyText1,textScaleFactor: 2.5)
                   ],
                 ),
               )
@@ -95,3 +97,4 @@ class _TaskCardsState extends State<TaskCards> {
     super.dispose();
   }
 }
+

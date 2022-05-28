@@ -81,7 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         borderSide: BorderSide(
                                             color: Colors.grey, width: 0.0),
                                       ),
-                                      label: Text('Email')),
+                                      label: Text('Email', textScaleFactor: 1.5)),
                                   controller: _loginController,
                                   focusNode: _loginFocus,
                                   validator: (val) {},
@@ -109,7 +109,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         borderSide: BorderSide(
                                             color: Colors.grey, width: 0.0),
                                       ),
-                                      label: Text('Password')),
+                                      label: Text('Password', textScaleFactor: 1.5)),
                                   controller: _passwordController,
                                   focusNode: _passFocus,
                                   validator: (val) {},
@@ -148,17 +148,17 @@ class _LoginScreenState extends State<LoginScreen> {
       isPressed = !isPressed;
     });
   }
-   _login() async {
+  _login() async {
     Map<String,dynamic> _data ={"email":_loginController.text,"password":_passwordController.text};
     _setIsPressed();
 
     DioClient dioClient = DioClient(header: {"Content-Type":"application/json"},data: json.encode(_data),query: {});
     Response? response;
 
-    response = await dioClient.postRequest(path: ApiEndpoints.login);
-
     print(_emailText);
     print(_passwordText);
+    response = await dioClient.postRequest(path: ApiEndpoints.login);
+
 
 
 
@@ -166,7 +166,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if (response.statusCode == 200) {
       _setIsPressed();
-     Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen(loginModel: loginModel,)));
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen(loginModel: loginModel,)));
       loginModel = LoginModel.fromJson(response.data);
     } else {
       _setIsPressed();

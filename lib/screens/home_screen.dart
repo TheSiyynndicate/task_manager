@@ -189,13 +189,13 @@ toolbarHeight: 50.0,
                                         flex: 7,
                                         child: Center(
                                             child: Text(
-                                          'My Task',
+                                          'MY TASK',
                                           style: Theme.of(context)
                                               .textTheme
                                               .headline6!
                                               .copyWith(
                                                   fontWeight: FontWeight.bold,
-                                                  color: Colors.white),
+                                                  color: Colors.green, fontSize: 30),
                                         ))),
                                     Expanded(
                                         flex: 2,
@@ -254,11 +254,13 @@ toolbarHeight: 50.0,
                                                 itemBuilder:
                                                     (BuildContext context,
                                                         int index) {
+
                                                   return TaskCards(
                                                     title: tasksModel!.data!
                                                         .elementAt(index)
                                                         .title,
                                                   );
+
                                                 });
                                           } else if (snapshot.hasError) {
                                             return Icon(Icons.error_outline);

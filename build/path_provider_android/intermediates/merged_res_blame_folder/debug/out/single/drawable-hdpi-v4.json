@@ -1,22 +1,22 @@
 [
     {
-        "merged": "/Users/mohammedkabirmalan/AndroidStudioProjects/task_manager/build/path_provider_android/intermediates/res/merged/debug/drawable-hdpi-v4/notification_bg_normal_pressed.9.png",
-        "source": "/Users/mohammedkabirmalan/.gradle/caches/transforms-2/files-2.1/5f663b08eec19eef9a9d1af662d9025e/core-1.6.0/res/drawable-hdpi-v4/notification_bg_normal_pressed.9.png"
+        "merged": "C:\\Users\\seyon\\GitHub\\task_manager\\build\\path_provider_android\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\notification_bg_normal_pressed.9.png",
+        "source": "C:\\Users\\seyon\\.gradle\\caches\\transforms-2\\files-2.1\\be6c37f920226f799c8e079c11ae9b32\\core-1.6.0\\res\\drawable-hdpi-v4\\notification_bg_normal_pressed.9.png"
     },
     {
-        "merged": "/Users/mohammedkabirmalan/AndroidStudioProjects/task_manager/build/path_provider_android/intermediates/res/merged/debug/drawable-hdpi-v4/notification_bg_low_normal.9.png",
-        "source": "/Users/mohammedkabirmalan/.gradle/caches/transforms-2/files-2.1/5f663b08eec19eef9a9d1af662d9025e/core-1.6.0/res/drawable-hdpi-v4/notification_bg_low_normal.9.png"
+        "merged": "C:\\Users\\seyon\\GitHub\\task_manager\\build\\path_provider_android\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\notification_bg_low_pressed.9.png",
+        "source": "C:\\Users\\seyon\\.gradle\\caches\\transforms-2\\files-2.1\\be6c37f920226f799c8e079c11ae9b32\\core-1.6.0\\res\\drawable-hdpi-v4\\notification_bg_low_pressed.9.png"
     },
     {
-        "merged": "/Users/mohammedkabirmalan/AndroidStudioProjects/task_manager/build/path_provider_android/intermediates/res/merged/debug/drawable-hdpi-v4/notification_bg_normal.9.png",
-        "source": "/Users/mohammedkabirmalan/.gradle/caches/transforms-2/files-2.1/5f663b08eec19eef9a9d1af662d9025e/core-1.6.0/res/drawable-hdpi-v4/notification_bg_normal.9.png"
+        "merged": "C:\\Users\\seyon\\GitHub\\task_manager\\build\\path_provider_android\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\notification_bg_low_normal.9.png",
+        "source": "C:\\Users\\seyon\\.gradle\\caches\\transforms-2\\files-2.1\\be6c37f920226f799c8e079c11ae9b32\\core-1.6.0\\res\\drawable-hdpi-v4\\notification_bg_low_normal.9.png"
     },
     {
-        "merged": "/Users/mohammedkabirmalan/AndroidStudioProjects/task_manager/build/path_provider_android/intermediates/res/merged/debug/drawable-hdpi-v4/notification_bg_low_pressed.9.png",
-        "source": "/Users/mohammedkabirmalan/.gradle/caches/transforms-2/files-2.1/5f663b08eec19eef9a9d1af662d9025e/core-1.6.0/res/drawable-hdpi-v4/notification_bg_low_pressed.9.png"
+        "merged": "C:\\Users\\seyon\\GitHub\\task_manager\\build\\path_provider_android\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\notification_bg_normal.9.png",
+        "source": "C:\\Users\\seyon\\.gradle\\caches\\transforms-2\\files-2.1\\be6c37f920226f799c8e079c11ae9b32\\core-1.6.0\\res\\drawable-hdpi-v4\\notification_bg_normal.9.png"
     },
     {
-        "merged": "/Users/mohammedkabirmalan/AndroidStudioProjects/task_manager/build/path_provider_android/intermediates/res/merged/debug/drawable-hdpi-v4/notify_panel_notification_icon_bg.png",
-        "source": "/Users/mohammedkabirmalan/.gradle/caches/transforms-2/files-2.1/5f663b08eec19eef9a9d1af662d9025e/core-1.6.0/res/drawable-hdpi-v4/notify_panel_notification_icon_bg.png"
+        "merged": "C:\\Users\\seyon\\GitHub\\task_manager\\build\\path_provider_android\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\notify_panel_notification_icon_bg.png",
+        "source": "C:\\Users\\seyon\\.gradle\\caches\\transforms-2\\files-2.1\\be6c37f920226f799c8e079c11ae9b32\\core-1.6.0\\res\\drawable-hdpi-v4\\notify_panel_notification_icon_bg.png"
     }
 ]
